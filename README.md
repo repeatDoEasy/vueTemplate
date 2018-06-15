@@ -30,6 +30,7 @@ clone改项目之后，只需进入跟目录，运行npm install命令即可
 也可以运行cnpm install命令（推荐），安装项目所需要的依赖包，推荐使用国内镜像进行安装
 
 接下来运行，npm run dev即可运行该项目，在浏览器里输入http://localhost:8080即可
+欢迎下载使用
    
    
 

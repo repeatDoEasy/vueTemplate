@@ -1,13 +1,7 @@
 <template>
 	<div class="ngariMain">
-		<Scroll :data="arr" :pulldown="pulldown" @pulldown="ee()" class="wrapper">
-			<div class="content">
-				<div style="height: 200px;background-color: red;"></div>
-				<div style="height: 200px;background-color: green;"></div>
-				<div style="height: 200px;background-color: goldenrod;"></div>
-			</div>
+		<Scroll :data="arr" :pulldown="pulldown" >
 		</Scroll>
-		<div @click="go()">咨询</div>
 	</div>
 </template>
 
@@ -25,20 +19,9 @@
 			Scroll
 		},
 		mounted() {
-			console.log(this);
+			
 		},
 		methods: {
-			go() {
-				this.$router.push("/scroll");
-
-			},
-			ee(){
-				console.log("eeee")
-			},
-			play() {
-				console.log(this)
-			}
-
 		}
 	}
 </script>
@@ -48,5 +31,9 @@
 	li {
 		font-size: 0.32rem;
 		padding: 0.2rem;
+	}
+	.wrapper {
+		height: 500px;
+		overflow: hidden;
 	}
 </style>

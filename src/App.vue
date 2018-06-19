@@ -1,9 +1,7 @@
 <template>
-	<div>
 		<transition name="slide-in">
 			<router-view/>
 		</transition>
-	</div>
 </template>
 
 <script>
@@ -124,7 +122,9 @@
 		clear: both;
 		visibility: hidden;
 	}
-	
+	body,html{
+		height: 100%;
+	}
 	body {
 		max-width: 750px;
 		margin: 0 auto;

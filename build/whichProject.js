@@ -1,4 +1,5 @@
 const root={
-	chat:"./root/chat/"
+	chat:"./root/chat/",
+	music:"./root/music/"
 }
-module.exports=root.chat;
+module.exports=root.music;

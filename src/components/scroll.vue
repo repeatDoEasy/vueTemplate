@@ -1,13 +1,24 @@
 <template>
-	<div ref="wrapper" >
+
+	<div ref="wrapper">
 		<slot></slot>
+		<div class="loaderbg" v-show="loading">
+			<div class="loader"></div>
+		</div>
 	</div>
+
 </template>
 
 <script>
 	import BScroll from "better-scroll"
 	export default {
 		name: "Scroll",
+
+		data() {
+			return {
+				loading: false
+			}
+		},
 		props: {
 			/**
 			 * 1 滚动的时候会派发scroll事件，会截流。
@@ -72,14 +83,14 @@
 			 */
 			refreshDelay: {
 				type: Number,
-				default: 20
+				default: 500
 			}
 		},
 		mounted() {
 			// 保证在DOM渲染完毕后初始化better-scroll
-			setTimeout(() => {
+			this.$nextTick(() => {
 				this._initScroll()
-			}, 20)
+			})
 		},
 		methods: {
 			_initScroll() {
@@ -104,7 +115,8 @@
 				if(this.pullup) {
 					this.scroll.on('scrollEnd', () => {
 						// 滚动到底部
-						if(this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+						if(this.scroll.y <= (this.scroll.maxScrollY)) {
+							this.loading = true;
 							this.$emit('scrollToEnd')
 						}
 					})
@@ -113,6 +125,7 @@
 				// 是否派发顶部下拉事件，用于下拉刷新
 				if(this.pulldown) {
 					this.scroll.on('touchEnd', (pos) => {
+
 						// 下拉动作
 						if(pos.y > 50) {
 							this.$emit('pulldown')
@@ -151,17 +164,49 @@
 		watch: {
 			// 监听数据的变化，延时refreshDelay时间后调用refresh方法重新计算，保证滚动效果正常
 			data() {
+
+				this.$nextTick(() => {
+
+					this.refresh();
+
+				});
 				setTimeout(() => {
-					this.refresh()
-				}, this.refreshDelay)
+					this.loading = false;
+				}, 1000)
 			}
 		}
 	}
 </script>
 
-<style>
-	.wrapper {
-		height: 300px;
-		overflow: hidden;
+<style scoped>
+	.loaderbg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+	.loader{
+		width:1.2rem;
+		height:1.2rem;
+		border-color: white white white transparent;
+		border-width: 4px;
+		border-style: solid;
+		border-radius: 100%;
+		position: absolute;
+		top:50%;
+		left:50%;
+		margin-left: -0.6rem;
+		margin-top: -0.6rem;
+		animation: xuanz 0.7s  linear infinite;
+	}
+	@-webkit-keyframes xuanz{
+		from{transform: rotate(0deg);}
+		to{transform: rotate(360deg);}
+	}
+	@keyframes xuanz{
+		from{transform: rotate(0deg);}
+		to{transform: rotate(360deg);}
 	}
 </style>

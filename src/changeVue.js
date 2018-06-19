@@ -12,7 +12,7 @@ Vue.prototype.setupService = function(option) {
 			for(let i = 0; i < arguments.length; i++) {
 				arg.push(arguments[i])
 			}
-			return this.$post(option[j].beanName, option[j].beanName, arg)
+			return this.$post(option[j].beanName, option[j].method, arg)
 		}.bind(this);
 	}
 
@@ -26,7 +26,7 @@ Vue.prototype.$post = function(serverName, serverMethod, arg) {
 	}).then(res=>{
 		return res.data.body;
 	},err=>{
-		return 0;
+		return err;
 	})
 }
 export default Vue

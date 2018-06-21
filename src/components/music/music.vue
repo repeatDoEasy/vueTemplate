@@ -1,18 +1,17 @@
 <template>
 	<div class="detail">
-		<scroll :data="musicList" :pullup="true" @scrollToEnd="scrollToEnd()" class="wrapper">
+		<scroll :data="musicList" :pullup="true" @scrollToEnd="loadMusic()" class="wrapper">
 			<div class="content">
 				<ul class="musicList">
-				<li v-for="(item,index) in musicList" :key="index" :data-key="index" @click="play(index)">
-					<p><img :src="item.imgUrl" /></p>
-					<p>{{item.songName}}</p>
-				</li>
-			</ul>
+					<li v-for="(item,index) in musicList" :key="index" :data-key="index" @click="play(index)">
+						<p><img :src="item.imgUrl" /></p>
+						<p>{{item.songName}}</p>
+					</li>
+				</ul>
 			</div>
-			
+
 		</scroll>
 
-		<loader v-show="loader"></loader>
 		<transition name="slide-in">
 			<router-view/>
 		</transition>
@@ -21,7 +20,6 @@
 </template>
 
 <script>
-	import loader from "./loader";
 	import { mapState } from "vuex";
 	import song from "./graph.json";
 	import scroll from "../scroll"
@@ -30,23 +28,29 @@
 			return {
 				loader: false,
 				page: 1,
-				pulldown:true
+				pulldown: true
 			}
 		},
 		created() {
+           this.loadMusic();
 		},
 		mounted() {
-			this.$store.commit("UPDATEMUSICLIST",song.slice(0,10))        
+
 		},
 		computed: mapState(["musicList"]),
 		components: {
-			loader,
 			scroll
 		},
 		methods: {
-			scrollToEnd() {
-				this.$store.commit("UPDATEMUSICLIST",song.slice(10,20))
-				
+			loadMusic() {
+				this.$load(true);
+				this.$axios.get("https://easy-mock.com/mock/5b05347f29c4976dc91e8c9d/music/page" + this.page).then(res => {
+					this.$nextTick(() => {
+						this.$store.commit("UPDATEMUSICLIST", res.data);
+						this.page=this.page+1;
+						this.$load(false);
+					})
+				});
 			},
 			play(index) {
 				this.$router.push("music/play");

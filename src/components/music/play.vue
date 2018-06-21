@@ -68,7 +68,8 @@
 		methods: {
 
 			play() {
-				this.url = "https://repeatdoeasy.github.io/static/audio/0F0725688652BDC5771A7BE2FBE7D281.m4a";
+				//https://repeatdoeasy.gitee.io/music/0CEDF221CA6AD22E7A18F5043423F967.m4a
+				this.url = "https://repeatdoeasy.gitee.io/music/"+this.musicList[this.currentIndex].songId+".m4a";
 				this.playMusic = true;
 				this.songTextList = change(this.musicList[this.currentIndex].songText)
 				this.onplayImg = this.musicList[this.currentIndex].imgUrl;
@@ -80,9 +81,6 @@
 					timeArr.push(i)
 				}
 				this.timeArr = timeArr;
-				console.log(this.songTextList);
-				console.log(this.timeArr)
-
 			},
 
 			showTime() {
@@ -153,9 +151,11 @@
 				}, 3000)
 			}
 		},
-
+        created(){
+        	
+        },
 		mounted() {
-			this.play()
+			this.play();
 		}
 	}
 </script>

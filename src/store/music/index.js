@@ -6,7 +6,8 @@ import getters from "./getters";
 vue.use(vuex);
 const state = {
 	musicList:[],
-	currentIndex:0
+	currentIndex:0,
+	showLoad:false
 }
 export default new vuex.Store({
 	state,

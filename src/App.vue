@@ -1,12 +1,23 @@
 <template>
+	<div style="height: 100%;">
+
 		<transition name="slide-in">
 			<router-view/>
 		</transition>
+		<loader v-show="showLoad"></loader>
+	</div>
+
 </template>
 
 <script>
+	import loader from "./components/loader";
+	import { mapState } from "vuex";
 	export default {
-		name: 'App'
+		name: 'App',
+		components: {
+			loader
+		},
+		computed: mapState(["showLoad"]),
 	}
 </script>
 
@@ -122,9 +133,12 @@
 		clear: both;
 		visibility: hidden;
 	}
-	body,html{
+	
+	body,
+	html {
 		height: 100%;
 	}
+	
 	body {
 		max-width: 750px;
 		margin: 0 auto;

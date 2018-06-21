@@ -2,9 +2,6 @@
 
 	<div ref="wrapper">
 		<slot></slot>
-		<div class="loaderbg" v-show="loading">
-			<div class="loader"></div>
-		</div>
 	</div>
 
 </template>
@@ -69,7 +66,7 @@
 			 */
 			pulldown: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			/**
 			 * 是否派发列表滚动开始的事件
@@ -116,7 +113,7 @@
 					this.scroll.on('scrollEnd', () => {
 						// 滚动到底部
 						if(this.scroll.y <= (this.scroll.maxScrollY)) {
-							this.loading = true;
+							
 							this.$emit('scrollToEnd')
 						}
 					})
@@ -170,9 +167,7 @@
 					this.refresh();
 
 				});
-				setTimeout(() => {
-					this.loading = false;
-				}, 1000)
+				
 			}
 		}
 	}

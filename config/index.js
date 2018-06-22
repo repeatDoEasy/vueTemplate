@@ -2,8 +2,9 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require('path')
-
+const path = require('path');
+let whichPath=require("../build/whichProject")
+whichPath=whichPath.replace("root","dist");
 module.exports = {
   dev: {
 
@@ -41,7 +42,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsRoot: path.resolve(__dirname, '.'+whichPath),
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
 

@@ -21,7 +21,6 @@
 
 <script>
 	import { mapState } from "vuex";
-	import song from "./graph.json";
 	import scroll from "../scroll"
 	export default {
 		data() {
@@ -43,6 +42,9 @@
 		},
 		methods: {
 			loadMusic() {
+				if(this.page==8){
+					return;
+				}
 				this.$load(true);
 				this.$axios.get("https://easy-mock.com/mock/5b05347f29c4976dc91e8c9d/music/page" + this.page).then(res => {
 					this.$nextTick(() => {
@@ -84,6 +86,8 @@
 	.musicList li {
 		padding: 0.3rem 0.2rem;
 		overflow: hidden;
+		width:100%;
+		overflow: hidden;
 		border-bottom: 1px solid #e5e5e5;
 	}
 	
@@ -98,8 +102,8 @@
 	}
 	
 	.musicList li p:nth-child(1) {
-		width: 1rem;
-		height: 1rem;
+		width: 100%;
+		height: 6rem;
 		border-radius: 0.2rem;
 		overflow: hidden;
 	}
@@ -111,9 +115,9 @@
 	}
 	
 	.musicList li p:nth-child(2) {
-		width: 6.1rem;
+		width: 100%;
 		height: auto;
 		overflow: hidden;
-		padding-left: 0.2rem;
+		padding: 0.5rem;
 	}
 </style>

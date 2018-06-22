@@ -1,6 +1,6 @@
 <template>
 	<div class="music-play">
-		<div >
+		<div>
 			<div class="music-kaiguan " :class="{onplay:playMusic}">
 				<img src="../../assets/needle-plus.png" />
 			</div>
@@ -18,7 +18,7 @@
 
 			</div>
 			<div class="processbg">
-				<div class="process" style="width:20%" ref="process">
+				<div class="process" style="width:0" ref="process">
 
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<pop :popObj="popObj"></pop>
-		<audio :src="url" controls="controls" autoplay v-on:timeupdate="showTime()" ref="audio" style="display: none;"></audio>
+		<audio :src="url" controls="controls" autoplay v-on:timeupdate="showTime()" ref="audio" style="display: none;" v-on:canplay="audioLoaded"></audio>
 	</div>
 
 </template>
@@ -40,7 +40,7 @@
 	import pop from "./pop";
 	import { mapState } from "vuex";
 	export default {
-		name:"play",
+		name: "play",
 		data() {
 			return {
 
@@ -66,21 +66,28 @@
 		computed: mapState(["musicList", "currentIndex"]),
 
 		methods: {
-
+			audioLoaded() {
+				this.playMusic = true;
+				
+			},
 			play() {
 				//https://repeatdoeasy.gitee.io/music/0CEDF221CA6AD22E7A18F5043423F967.m4a
-				this.url = "https://repeatdoeasy.gitee.io/music/"+this.musicList[this.currentIndex].songId+".m4a";
-				this.playMusic = true;
-				this.songTextList = change(this.musicList[this.currentIndex].songText)
+				this.url = "https://repeatdoeasy.gitee.io/dist/audio/" + this.musicList[this.currentIndex].songId + ".m4a";
 				this.onplayImg = this.musicList[this.currentIndex].imgUrl;
+				this.songTextList = change(this.musicList[this.currentIndex].songText);
+				this.text1="";
+				this.text2="";
+				this.text3="";
 				this.timeLength = this.musicList[this.currentIndex].timeLength;
-				this.timeArr=[];
+				this.timeArr = [];
 				let timeArr = [];
 				this.currentTimeIndex = 0;
+
 				for(let i in this.songTextList) {
 					timeArr.push(i)
 				}
 				this.timeArr = timeArr;
+
 			},
 
 			showTime() {
@@ -113,13 +120,13 @@
 			},
 
 			panduan(time) {
-				
+
 				if(parseFloat(time) >= parseFloat(this.timeArr[this.currentTimeIndex])) {
 					this.text3 = this.songTextList[this.timeArr[this.currentTimeIndex - 1]] ? this.songTextList[this.timeArr[this.currentTimeIndex - 1]] : "";
 					this.text1 = this.songTextList[this.timeArr[this.currentTimeIndex]];
 					this.text2 = this.songTextList[this.timeArr[this.currentTimeIndex + 1]];
 					this.currentTimeIndex++;
-					
+
 				}
 			},
 
@@ -130,7 +137,7 @@
 				}
 				let id = this.currentIndex - 1;
 				this.$store.commit("UPDATECURRENTINDEX", id);
-				this.play()
+				this.play();
 			},
 
 			nextMusic() {
@@ -151,9 +158,9 @@
 				}, 3000)
 			}
 		},
-        created(){
-        	
-        },
+		created() {
+
+		},
 		mounted() {
 			this.play();
 		}

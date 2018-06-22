@@ -1,10 +1,12 @@
 <template>
 	<div class="loaderbg">
-		<div class="loader"></div>
+		<div class="loader">
+			<img src="../assets/load.gif" />
+		</div>
+
 	</div>
 
 </template>
-
 
 <script>
 	export default {
@@ -19,31 +21,26 @@
 		left: 0;
 		bottom: 0;
 		right: 0;
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: transparent;
 		z-index: 999999;
 	}
-	.loader{
-		width:1.2rem;
-		height:1.2rem;
-		border-color: white white white transparent;
-		border-width: 4px;
-		border-style: solid;
-		border-radius: 100%;
+	
+	.loader {
+		width: 200px;
 		position: absolute;
-		top:50%;
+		overflow: hidden;
+		height: 199px;
+		border-radius: 27px;
+		transform: scale(0.5);
+		top:40%;
 		left:50%;
-		margin-left: -0.6rem;
-		margin-top: -0.6rem;
-		animation: xuanz 0.7s  linear infinite;
+		margin-top: -100px;
+		margin-left: -100px;
 	}
-	@-webkit-keyframes xuanz{
-		from{transform: rotate(0deg);}
-		to{transform: rotate(360deg);}
+	
+	.loaderbg img {
+		position: absolute;
+		top: -56px;
+		left: -70px;
 	}
-	@keyframes xuanz{
-		from{transform: rotate(0deg);}
-		to{transform: rotate(360deg);}
-	}
-
-
 </style>
